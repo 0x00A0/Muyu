@@ -1,0 +1,92 @@
+﻿<Window x:Class="Muyu.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Muyu"
+        mc:Ignorable="d"
+        Title="电子木鱼" Height="768" Width="1024" Background="Black" KeyDown="Window_KeyDown" Icon="/icon.jpg">
+    <Grid RenderTransformOrigin="0.5,0.5">
+        <Grid.RenderTransform>
+            <TransformGroup>
+                <ScaleTransform/>
+                <SkewTransform/>
+                <RotateTransform/>
+                <TranslateTransform X="0" Y="0"/>
+            </TransformGroup>
+        </Grid.RenderTransform>
+        <Button x:Name="btn_laugh" Content="1 (扣1佛祖陪你一起笑)" VerticalAlignment="Center" Height="51" HorizontalAlignment="Center" Width="466" Margin="0,600,0,0" Background="#FFFDFDFD" FontSize="20" Click="btn_laugh_Click">
+
+        </Button>
+        <Image x:Name="img_muyu" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Source="/muyu.png" Stretch="None" RenderTransformOrigin="0.5,0.5" MouseDown="img_muyu_MouseDown" Focusable="True">
+            <Image.Triggers>
+                <EventTrigger RoutedEvent="UIElement.MouseDown">
+                    <BeginStoryboard>
+                        <Storyboard x:Name="scaledown">
+                            <DoubleAnimation Storyboard.TargetName="imgScale" Storyboard.TargetProperty="ScaleX"
+                                                 To="1" Duration="0:0:0.1"/>
+                            <DoubleAnimation Storyboard.TargetName="imgScale" Storyboard.TargetProperty="ScaleY"
+                                                 To="1" Duration="0:0:0.1"/>
+                            <DoubleAnimation Storyboard.TargetName="lbl_tip" Storyboard.TargetProperty="Opacity"
+                                                 To="100" Duration="0:0:0.2"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                    <BeginStoryboard HandoffBehavior="Compose">
+                        <Storyboard x:Name="scaleup">
+                            <DoubleAnimation Storyboard.TargetName="imgScale" Storyboard.TargetProperty="ScaleX"
+                                                 To="1.5" Duration="0:0:0.1"/>
+                            <DoubleAnimation Storyboard.TargetName="imgScale" Storyboard.TargetProperty="ScaleY"
+                                                 To="1.5" Duration="0:0:0.1"/>
+                            <DoubleAnimation Storyboard.TargetName="lbl_tip" Storyboard.TargetProperty="Opacity"
+                                                 To="0" Duration="0:0:0.2"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Image.Triggers>
+            <Image.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform x:Name="imgScale" ScaleX="1.5" ScaleY="1.5"/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Image.RenderTransform>
+        </Image>
+        <Label x:Name="lbl_tip" Content="功德+1" HorizontalAlignment="Stretch" Margin="300,-400,0,0" VerticalAlignment="Stretch" Height="62" Width="240" Foreground="White" FontFamily="Microsoft YaHei UI" FontSize="24" FontStretch="Normal" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Normal" Visibility="Visible" RenderTransformOrigin="0.5,0.5" Opacity="0">
+            <Label.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform x:Name="tipMove" X="0" Y="0"/>
+                </TransformGroup>
+            </Label.RenderTransform>
+
+        </Label>
+        <Label x:Name="lbl_count" Content="功德值:0" HorizontalAlignment="Stretch" Height="75" Margin="0,400,0,0" VerticalAlignment="Stretch" Width="419" Foreground="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="30"/>
+        <Button x:Name="btn_setting" Content="" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="45" Width="45" BorderBrush="{x:Null}" MouseEnter="btn_setting_MouseEnter" MouseLeave="btn_setting_MouseLeave" Opacity="0.6" Click="btn_setting_Click" Focusable="False">
+            <Button.Template>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <ContentControl>
+                        <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <StackPanel>
+                                <StackPanel.Background>
+                                    <ImageBrush ImageSource="/setting.png" Stretch="Fill"/>
+                                </StackPanel.Background>
+                            </StackPanel>
+                        </Border>
+                    </ContentControl>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+        <Grid x:Name="grd_setting" Background="Black" Margin="0,67,0,0" Visibility="Hidden" >
+            <Label Content="自定义文案:" HorizontalAlignment="Stretch" Height="45" VerticalAlignment="Stretch" Width="140" Background="Black" Foreground="White" FontSize="24" Margin="0,0,300,200"/>
+            <TextBox x:Name="txt_tips" TextWrapping="Wrap" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" Width="314" Margin="200,0,0,200" TextChanged="txt_tips_TextChanged"/>
+            <Label Content="功德增长值:" HorizontalAlignment="Stretch" Height="45" VerticalAlignment="Stretch" Width="140" Background="Black" Foreground="White" FontSize="24" Margin="0,0,300,100"/>
+            <TextBox x:Name="txt_step" InputMethod.IsInputMethodEnabled="False" PreviewTextInput="limitnumber" TextWrapping="Wrap" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" Width="314" Margin="200,0,0,100" TextChanged="txt_step_TextChanged"/>
+            <Label Content="By 0x00A0" HorizontalAlignment="Stretch" Margin="0,568,0,0" VerticalAlignment="Bottom" Foreground="White" HorizontalContentAlignment="Center"/>
+        </Grid>
+
+
+    </Grid>
+</Window>
